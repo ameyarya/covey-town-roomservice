@@ -206,13 +206,14 @@ export function townSubscriptionHandler(socket: Socket): void {
   const townController = CoveyTownsStore.getInstance()
     .getControllerForTown(coveyTownID);
 
-  // Retrieve our metadata about this player from the TownController
-  const s = townController?.getSessionByToken(token);
   if (!townController) {
     // No valid session exists for this token, hence this client's connection should be terminated
     socket.disconnect(true);
     return;
   }
+
+  // Retrieve our metadata about this player from the TownController
+  const s = townController.getSessionByToken(token);
 
   if (!s) {
     // No valid session exists for this token, hence this client's connection should be terminated
